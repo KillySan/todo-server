@@ -41,8 +41,9 @@ export class TodosGateway
   }
 
   @SubscribeMessage(TODO_EVENTS.FIND_ALL)
-  findAll(): Promise<Todo[]> {
-    return this.todosService.findAll();
+  async findAll() {
+    const todos = await this.todosService.findAll();
+    this.wss.emit(TODO_EVENTS.FIND_ALL, todos);
   }
 
   @SubscribeMessage(TODO_EVENTS.CREATE)
@@ -53,6 +54,8 @@ export class TodosGateway
 
   @SubscribeMessage(TODO_EVENTS.UPDATE)
   async update(@MessageBody() updateTodoDto: UpdateTodoDto) {
+    this.logger.log('UPDATE');
+
     const todo = await this.todosService.update(
       updateTodoDto.id,
       updateTodoDto
