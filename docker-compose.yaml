@@ -1,8 +1,8 @@
-version: "3.8"
+version: '3.8'
 
 services:
   api:
-    build: 
+    build:
       dockerfile: Dockerfile
       context: .
       target: development
@@ -20,8 +20,7 @@ services:
       - postgres
       - postgres_admin
     ports:
-      - "3000:3000"
-
+      - '3000:3000'
 
   postgres:
     image: postgres:latest
@@ -32,7 +31,7 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_HOST_AUTH_METHOD=${POSTGRES_HOST_AUTH_METHOD}
     ports:
-      - "5432:5432"
+      - '5432:5432'
 
   postgres_admin:
     image: dpage/pgadmin4:latest
@@ -41,6 +40,6 @@ services:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_MAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PW}
     ports:
-      - "5050:80"
+      - '5050:80'
     depends_on:
       - postgres
